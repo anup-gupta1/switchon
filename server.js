@@ -10,18 +10,13 @@ const path = require('path');
 const app = express();
 
 const server = require('http').Server(app);
+const io = require('socket.io').listen(server);
+app.set('server',server);
+// require('./mySocket')(io,app);
 
-
-
-
-
-// socket.io code
-var socketio = require("socket.io");
-var io = socketio.listen(server);
-app.set("server", server);
 var notifClients = {};
 app.set("sockets", notifClients);
-var nsp = io.of("/notifications");
+var nsp = io.of("/request");
 // connection establishment
 nsp.on("connect", function(clientSocket) {
   clientSocket.on("initClientInfo", function(data) {
@@ -38,7 +33,6 @@ nsp.on("connect", function(clientSocket) {
     delete notifClients[req_socket_uid];
   });
 });
-
 
 
 
@@ -95,11 +89,12 @@ if(process.env.NODE_ENV === 'production'){
     })
 }
 
+
+
 // console.log('check app==================', app);
 const socketApp = app;
 // console.log('check socket===========', socketApp);
 server.socketApp = socketApp;
-
 
 
 
@@ -113,6 +108,5 @@ server.listen(port, () => console.log(`Server running on port ${port}`));
 exports.socketData = notifClients;
 
 exports = module.exports = server;
-
 
 

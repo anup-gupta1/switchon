@@ -1,15 +1,10 @@
-import {SET_REQUEST,ADD_PENDING_REQUEST,ADD_APPROVED_REQUEST,REMOVE_PENDING_REQUEST,
+import {ADD_PENDING_REQUEST,ADD_APPROVED_REQUEST,REMOVE_PENDING_REQUEST,
         ADD_INCOMING_REQUEST,REMOVE_INCOMING_REQUEST,SET_PENDING_REQUESTS,SET_APPROVED_REQUESTS,
-        SET_APPROVAL_REQUESTS} 
+        SET_INCOMING_REQUESTS} 
         from './types'
 import axios from 'axios';
 
 
-
-export const setRequest = (request) =>({
-    type:SET_REQUEST,
-     request
-})
 
 export const addPendingRequest = (request) =>({
    type: ADD_PENDING_REQUEST,
@@ -21,19 +16,16 @@ export const addApprovedRequest = (request) =>({
     request
 })
 
-export const removePendingRequest = (request) =>({
+export const removePendingRequest = (id) =>({
     type: REMOVE_PENDING_REQUEST,
-    request
+    id
 })
 
-export const addIncomingRequest = (request) =>({
-    type:ADD_INCOMING_REQUEST,
-    request
-})
 
-export const removeIncomingRequest = (request) =>({
+
+export const removeIncomingRequest = (id) =>({
     type: REMOVE_INCOMING_REQUEST,
-    request
+    id
 })
 
 
@@ -47,8 +39,8 @@ export const setApprovedRequests = (requests) =>({
     requests
 })
 
-export const setApprovalRequests = (requests) =>({
-    type: SET_APPROVAL_REQUESTS,
+export const setIncommingRequests = (requests) =>({
+    type: SET_INCOMING_REQUESTS,
     requests
 })
 
@@ -65,7 +57,7 @@ export const createRequest = (data) => dispatch =>{
 export const updateRequest = (id,data) => dispatch =>{
     return axios.put(`/api/request/${id}`,data).then(res =>{
         if(res.data.success){
-            dispatch(setRequest(res.data.request))
+            dispatch(removeIncomingRequest(id))
         }
         return res;
     })
@@ -74,7 +66,7 @@ export const updateRequest = (id,data) => dispatch =>{
 export const deleteRequest = (id) => dispatch =>{
     return axios.delete(`/api/request/${id}`).then(res =>{
         if(res.data.success){
-            dispatch(removePendingRequest(res.data.departments))
+            dispatch(removePendingRequest(id))
         }
         return res;
     })
@@ -102,11 +94,24 @@ export const getApprovedRequests = () => dispatch =>{
 }
 
 
-export const getApprovalRequests = (departmentId) => dispatch =>{
-    return axios.get(`/api/request/${departmentId}/forApproval`).then(res =>{
+export const getIncomingRequests = (departmentId) => dispatch =>{
+    return axios.get(`/api/request/${departmentId}/incoming`).then(res =>{
         if(res.data.success){
-            dispatch(setApprovalRequests(res.data.requests))
+            dispatch(setIncommingRequests(res.data.requests))
         }
         return res;
     })
 }
+
+
+
+
+// export const addIncomingRequest = (request) => dispatch =>{
+//     socket.on('create-request', (data) => {
+//         console.log("------------------socket data--------------\n",data)
+//         dispatch({type:ADD_INCOMING_REQUEST, request})
+//     })
+// }
+    
+
+

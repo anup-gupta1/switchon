@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import TextFieldGroup from '../common/TextFieldGroup';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import PropTypes from 'prop-types';
 import { getDepartmentUsers } from '../../actions/authActions';
 import { getDepartmentsForReq } from '../../actions/departmentActions';
@@ -87,7 +87,7 @@ class Register extends Component {
                     </div>
                     <div className="form-container">
                         <form className="d-flex flex-column justify-content-center" onSubmit={this.onSubmit}>
-                            <TextFieldGroup
+                            <TextAreaFieldGroup
                                 name="text"
                                 type="text"
                                 label="Message"

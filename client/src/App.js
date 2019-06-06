@@ -45,7 +45,7 @@ class App extends Component {
             <PrivateRoute exact path="/pending" component={Request} />
         </Switch>
         <Switch>
-            <PrivateRoute exact path="/create-request" component={RequestForm} />
+            <PrivateRoute exact path="/" component={RequestForm} />
         </Switch>
         <Switch>
             <PrivateRoute exact path="/approved" component={Request} />

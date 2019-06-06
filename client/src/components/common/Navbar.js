@@ -3,20 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './common.css';
 import { Link,withRouter } from 'react-router-dom';
-import {logout} from '../../actions/authActions'
+import {logout,getUserInfo} from '../../actions/authActions'
+import Notification from './Notification.js';
+
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showNavSidebar: false,
-            showCollapseIcon: false
+            showCollapseIcon: false,
+            dropdownOpen:false
         }
         this.toggle = this.toggle.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.toggleNotification = this.toggleNotification.bind(this);
+    }
+
+
+    toggleNotification(){
+        this.setState({dropdownOpen: !this.state.dropdownOpen})
     }
 
 
@@ -44,6 +53,13 @@ class Navbar extends Component {
         });
     }
 
+
+    componentDidMount(){
+        this.props.getUserInfo()
+            .then(res =>{
+                console.log(res.data);
+            })
+    }
 
     handleRegister(){
         this.props.history.push('/register');
@@ -79,6 +95,7 @@ class Navbar extends Component {
 
     render() {
         const { auth, profile } = this.props;
+        const {dropdownOpen} = this.state;
         let profilePath = profile ? '/profile/' + profile.handle : ''
         return (
             <div>
@@ -91,11 +108,15 @@ class Navbar extends Component {
                                 <div className="collapsible-nav-icon"></div>
                                 <div className="collapsible-nav-icon"></div>
                             </div> : 
-                            <div className="d-flex nav_item_right">
-                                <div className="nav_item"> <Link to='/create-request'>Create Request</Link></div>
+                            <div className="d-flex align-items-center nav_item_right">
+                                <div className="nav_item"> <Link to='/'>Create</Link></div>
                                 <div className="nav_item"> <Link to='/pending'>Pending</Link></div>
                                 <div className="nav_item"> <Link to="/approved">Approved</Link></div>
                                 <div className="nav_item"> <Link to="/incoming-request">Incoming Request</Link></div>
+                                <div className="nav_item" onClick={this.toggleNotification}>
+                                 <Notification dropdownOpen={dropdownOpen} toggle={this.toggleNotification}/>
+                                 </div>
+                                <div className="nav-sidebar-item common-pointer" onClick={this.handleLogout}>Logout</div>
                             </div>
                         }
                     </div>
@@ -148,4 +169,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default withRouter(connect(mapStateToProps, {logout})(Navbar));
+export default withRouter(connect(mapStateToProps, {logout,getUserInfo})(Navbar));

@@ -79,3 +79,29 @@ ul.nav-sidebar-items.nav-sidebar-item{
 margin:0px 16px;
 color:#fff;
 }
+
+
+.notification-item{
+    padding:8px 16px;
+}
+
+.notification-menu{
+    position: fixed !important;
+    top: 50px !important;
+    left: unset !important;
+    right: 6% !important;
+    transform: unset !important;
+}
+
+.notif-grammer{
+    font-size: 14px;
+}
+
+.isAlert{
+    background: red;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: fixed;
+    top: 16px;
+}

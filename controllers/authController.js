@@ -101,17 +101,6 @@ class authController{
 
 
 
-
-    getCurrentUser(req,res){
-        const user ={
-            id: req.user.id,
-            name: req.user.name,
-            email: req.user.email
-        }
-        return res.status(200).json({success: true,user});
-    }
-
-
     getUsersByDepartment(req,res){
         console.log(req.params)
         User.find({department_id:req.params.departmentId})
@@ -120,6 +109,8 @@ class authController{
             }).catch(err => res.json({success:false,error:err}))
     }
 
+
+  
 
 }
 
