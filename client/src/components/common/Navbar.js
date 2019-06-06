@@ -94,14 +94,13 @@ class Navbar extends Component {
     }
 
     render() {
-        const { auth, profile } = this.props;
+        const { auth } = this.props;
         const {dropdownOpen} = this.state;
-        let profilePath = profile ? '/profile/' + profile.handle : ''
         return (
             <div>
                 <div className="nav">
                     <div className="d-flex justify-content-between align-items-center nav-top">
-                        <div className="nav-brand"><h3>LetsGo</h3></div>
+                        <div className="nav-brand"><h3>Switch On</h3></div>
                         {this.state.showCollapseIcon ?
                             <div className="collapse-navbar common-pointer" onClick={this.toggle}>
                                 <div className="collapsible-nav-icon"></div>
