@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {getPendingRequests,getApprovedRequests, getIncomingRequests} from '../../actions/requestActions';
+import {getPendingRequests,getApprovedRequests, getIncomingRequests, getRejectedRequests} from '../../actions/requestActions';
 import RequestItem from './RequestItem';
 import './request.css';
+import LazyLoad from 'react-lazyload';
 
 
 
@@ -24,7 +25,8 @@ class Request extends Component {
         const {user} = this.props.auth;
         console.log(user);
     
-        const {pending,approved,incomingRequests,getPendingRequests,getApprovedRequests, getIncomingRequests} = this.props;
+        const {pending,approved,rejected,incomingRequests,getPendingRequests,
+            getApprovedRequests,getIncomingRequests, getRejectedRequests} = this.props;
         if(pathname === '/pending'){
             this.setState({type:'pending'})
             if(pending.length === 0){
@@ -46,13 +48,20 @@ class Request extends Component {
                     console.log(res);
                 })
             }
+        }else if(pathname === '/rejected'){
+            this.setState({type:'rejected'});
+            if(rejected.length === 0){
+                getRejectedRequests().then(res=>{
+                    console.log(res);
+                })
+            }
         }
     }
 
 
     _renderRequests(){
         const {type} = this.state;
-        const {pending,approved,incomingRequests} = this.props;
+        const {pending,approved,incomingRequests,rejected} = this.props;
         let requests = []
         if(type === 'pending'){
             requests = pending
@@ -60,12 +69,16 @@ class Request extends Component {
             requests = approved;
         }else if(type === 'incoming-request'){
             requests = incomingRequests
+        }else if(type === 'rejected'){
+            requests = rejected;
         }
 
         return requests.length > 0 ? (
             requests.map(request =>{ 
               return (
-                <RequestItem key={request._id} type={type} request={request} />
+                  <LazyLoad height={100}>
+                      <RequestItem key={request._id} type={type} request={request} />
+                  </LazyLoad>
               )
               })
           ) : (null)
@@ -77,7 +90,7 @@ class Request extends Component {
 
     render() {
         return (
-            <div className="request-container">
+            <div className="d-flex flex-column align-items-center justify-content-center request-container">
                 {this._renderRequests()}
             </div>
         )
@@ -93,7 +106,8 @@ const mapStateToProps = state => ({
     departments:state.department.departments,
     pending:state.request.pending,
     approved:state.request.approved,
-    incomingRequests:state.request.incomingRequests
+    incomingRequests:state.request.incomingRequests,
+    rejected:state.request.rejected
 });
 
-export default withRouter(connect(mapStateToProps, {getPendingRequests,getApprovedRequests,getIncomingRequests })(Request));
+export default withRouter(connect(mapStateToProps, {getPendingRequests,getApprovedRequests,getIncomingRequests, getRejectedRequests })(Request));

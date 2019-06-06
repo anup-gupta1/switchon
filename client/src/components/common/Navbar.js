@@ -107,16 +107,18 @@ class Navbar extends Component {
                                 <div className="collapsible-nav-icon"></div>
                                 <div className="collapsible-nav-icon"></div>
                             </div> : 
-                            <div className="d-flex align-items-center nav_item_right">
+                           (auth.isAuthenticated ? 
+                           <div className="d-flex align-items-center nav_item_right">
                                 <div className="nav_item"> <Link to='/'>Create</Link></div>
-                                <div className="nav_item"> <Link to='/pending'>Pending</Link></div>
                                 <div className="nav_item"> <Link to="/approved">Approved</Link></div>
+                                <div className="nav_item"> <Link to='/pending'>Pending</Link></div>
+                                <div className="nav_item"> <Link to="/rejected">Rejected</Link></div>
                                 <div className="nav_item"> <Link to="/incoming-request">Incoming Request</Link></div>
                                 <div className="nav_item" onClick={this.toggleNotification}>
                                  <Notification dropdownOpen={dropdownOpen} toggle={this.toggleNotification}/>
                                  </div>
                                 <div className="nav-sidebar-item common-pointer" onClick={this.handleLogout}>Logout</div>
-                            </div>
+                            </div>:null)
                         }
                     </div>
                 </div>

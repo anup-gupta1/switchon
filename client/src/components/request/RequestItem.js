@@ -18,6 +18,7 @@ class RequestItem extends Component {
         this.deleteRequest = this.deleteRequest.bind(this);
         this._renderInfo = this._renderInfo.bind(this);
         this.updateRequest = this.updateRequest.bind(this);
+        this._renderUpdateTime = this._renderUpdateTime.bind(this);
     }
 
 
@@ -47,15 +48,30 @@ class RequestItem extends Component {
     _renderInfo(){
         const {type,request} = this.props;
         let title;
-        if(type === 'pending'){
+        
             title =(
                 <div className="d-flex request-item-title">
                   <div clasName="title-text">Reques for : {request.created_for.name}</div>
                   <div className="dept-info">{'('} Dept : {request.created_for.department_id.name} { ')'}</div>
                 </div>
             )
-        }
+        
         return title;
+    }
+    _renderUpdateTime(){
+        const {type,request} = this.props;
+        let text;
+        let date = moment(new Date(request.updated_on)).format('DD MMM YY')
+        if(type === 'approved'){
+            text = `Approved on : ${date}`
+        }else if(type === 'rejected'){
+            text = `Rejected On : ${date}`
+        }
+        return (
+            <div className="request-item-footer">
+                {text} 
+            </div>
+        )
     }
 
     _renderOption(){
@@ -102,7 +118,7 @@ class RequestItem extends Component {
 
 
     render() {
-        const {request} = this.props;
+        const {request,type} = this.props;
         
         return (
             <div className="request-item-container">
@@ -115,6 +131,7 @@ class RequestItem extends Component {
                  {this._renderOption()}
              </div>
              {this._renderInfo()}
+             {(type === 'rejected' || type==='approved')&&this._renderUpdateTime()}
             </div>
         )
     }

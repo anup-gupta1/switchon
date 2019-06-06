@@ -35,7 +35,7 @@ class RequestController{
 
 
                             if(sockets[user._id]){
-                                sockets[user._id].emit('new-incoming-request',newRequest)
+                                sockets[user._id].emit('new-incoming-request',populatedRequest)
                             }
 
                              data.actor_id = req.user.id;

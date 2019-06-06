@@ -110,6 +110,7 @@ export const getUserInfo = () => dispatch =>{
             socket.emit('initClientInfo',{userId:res.data.user._id})
            
             socket.on('new-incoming-request', (request) => {
+                console.log("----------------- new incoming request ---------------",request);
                     dispatch({type:ADD_INCOMING_REQUEST,request})
              })
            socket.on('remove-incoming-request',(request)=>{
@@ -129,7 +130,7 @@ export const getUserInfo = () => dispatch =>{
           socket.on('request-rejected',(request)=>{
             dispatch({type:REMOVE_INCOMING_REQUEST,id:request._id})
             dispatch({type:REMOVE_PENDING_REQUEST,id:request._id})
-            dispatch({type:ADD_REJECTED_REQUEST,id:request._id})
+            dispatch({type:ADD_REJECTED_REQUEST,request})
          })
 
 

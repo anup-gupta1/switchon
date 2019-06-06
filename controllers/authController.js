@@ -70,7 +70,7 @@ class authController{
                
                 if (!user) {
                     errors.email = "Email does not exist";
-                    return res.status(400).json({ success: false, errors: errors });
+                    return res.json({ success: false,errors });
                 }
                 bcrypt.compare(password, user.password)
                     .then(isMatch => {

@@ -1,13 +1,14 @@
 import { ADD_PENDING_REQUEST,ADD_APPROVED_REQUEST,REMOVE_PENDING_REQUEST,
          ADD_INCOMING_REQUEST,REMOVE_INCOMING_REQUEST, SET_PENDING_REQUESTS,
-         SET_APPROVED_REQUESTS, SET_INCOMING_REQUESTS } from '../actions/types';
+         SET_APPROVED_REQUESTS, SET_INCOMING_REQUESTS,SET_REJECTED_REQUESTS, ADD_REJECTED_REQUEST } from '../actions/types';
 
 
 const initialState = {
     pending:[],
     approved:[],
     forApproval:[],
-    incomingRequests:[]
+    incomingRequests:[],
+    rejected:[]
 };
 
 
@@ -55,6 +56,16 @@ export default function (state = initialState, action) {
                 ...state,
                 pending:pendingRequests
             }
+        case SET_REJECTED_REQUESTS:
+          return{
+              ...state,
+              rejected:action.requests
+          }
+        case ADD_REJECTED_REQUEST:
+          return{
+              ...state,
+              rejected:[action.request, ...state.rejected]
+          }
         default:
             return state
     }

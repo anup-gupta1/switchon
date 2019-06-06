@@ -7,6 +7,7 @@ import notifType from '../../utils/notificationType.json'
 import {getNotifications,getNotificationAlert} from '../../actions/authActions';
 import moment from 'moment';
 import classnames from 'classnames'
+import LazyLoad from 'react-lazyload';
 
 class Notification extends Component {
     constructor(props){
@@ -69,10 +70,13 @@ class Notification extends Component {
                if(user.id == notification.request_for._id) param2 = "you"
                notifGrammer = notificationGrammer(notification.type, param1, param2, requestText);
                return(
-                <DropdownItem className="notification-item">
-                <div className="notif-grammer">{notifGrammer}</div>
-                <div className="request-item-top">{moment(new Date(notification.created_at)).format('DD MMM YY')} </div>
-                </DropdownItem>
+                  
+                    <DropdownItem className="notification-item">
+                     <div className="notif-grammer">{notifGrammer}</div>
+                     <div className="request-item-top">{moment(new Date(notification.created_at)).format('DD MMM YY')} </div>
+                   </DropdownItem>
+   
+               
                )
 
            })

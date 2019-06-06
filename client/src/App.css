@@ -70,6 +70,17 @@
   .login-form-container {
     width:50% !important;
   }
+
+  .request-item-container{
+    width: 50%;
+  }
+
+  .request-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 
@@ -77,3 +88,7 @@ textarea{
   font-size: 16px;
 }
 
+.error-info{
+  color:red;
+  font-size: 12px;
+}

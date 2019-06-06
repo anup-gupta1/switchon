@@ -1,6 +1,6 @@
 import {ADD_PENDING_REQUEST,ADD_APPROVED_REQUEST,REMOVE_PENDING_REQUEST,
         ADD_INCOMING_REQUEST,REMOVE_INCOMING_REQUEST,SET_PENDING_REQUESTS,SET_APPROVED_REQUESTS,
-        SET_INCOMING_REQUESTS} 
+        SET_INCOMING_REQUESTS,SET_REJECTED_REQUESTS,ADD_REJECTED_REQUEST} 
         from './types'
 import axios from 'axios';
 
@@ -43,6 +43,13 @@ export const setIncommingRequests = (requests) =>({
     type: SET_INCOMING_REQUESTS,
     requests
 })
+
+export const setRejectedRequests = (requests) =>({
+    type: SET_REJECTED_REQUESTS,
+    requests
+})
+
+
 
 
 export const createRequest = (data) => dispatch =>{
@@ -103,6 +110,15 @@ export const getIncomingRequests = (departmentId) => dispatch =>{
     })
 }
 
+
+export const getRejectedRequests = () => dispatch =>{
+    return axios.get(`/api/request/rejected`).then(res =>{
+        if(res.data.success){
+            dispatch(setRejectedRequests(res.data.requests))
+        }
+        return res;
+    })
+}
 
 
 

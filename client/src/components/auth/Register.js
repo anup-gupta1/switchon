@@ -129,6 +129,7 @@ class Register extends Component {
                                   <option key="1" value="">Select Department</option>
                                      {this._renderdepartmentOptions()}
                                  </select>
+                                 {errors.department_id && <div className="error-info">{errors.department_id}</div>}
                             </div>
                             <input className="btn btn-primary auth-submit-button" type="submit" value="Register" />
                         </form>

@@ -16,6 +16,10 @@
     margin:5px;
 }
 
+.nav_item_right{
+    padding-right:32px;
+}
+
 .navbar-container{
     background: #fff;
     position: fixed;
@@ -91,6 +95,8 @@ color:#fff;
     left: unset !important;
     right: 6% !important;
     transform: unset !important;
+    height: 80vh;
+    overflow: auto;
 }
 
 .notif-grammer{

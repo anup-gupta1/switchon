@@ -46,13 +46,22 @@ class Register extends Component {
         });
     };
 
+
+
     onSubmit(e) {
         e.preventDefault();
         const { createRequest } = this.props;
         const { text,created_for,department_id } = this.state;
-        const userData = { text, department_id ,created_for};
-        createRequest(userData);
-        this.props.history.push('/login');
+        let errors = {};
+        if(text === '')errors.text = "Message field is required";
+        if(created_for === '')errors.created_for = "Select a user to send a request";
+        if(department_id === '')errors.department_id = "Department field is required";
+        if(errors.text || errors.department_id || errors.created_for){
+            this.setState({errors})
+        }else{
+            const userData = { text, department_id ,created_for};
+            createRequest(userData);
+        }
     }
 
     _renderdepartmentOptions = () =>{
@@ -94,8 +103,8 @@ class Register extends Component {
                                 value={this.state.text}
                                 placeholder="Type Message"
                                 onChange={this.onChange}
-                                error={errors.text}
                             />
+                            {errors.text && <div className="error-info">{errors.text}</div>}
                             <div className="custom-select-container">
                                  <select 
                                    className="select-department-item" 
@@ -106,18 +115,22 @@ class Register extends Component {
                                   <option key="1" value="">Select Department</option>
                                      {this._renderdepartmentOptions()}
                                  </select>
+                                 {errors.department_id && <div className="error-info">{errors.department_id}</div>}
                             </div>
+                            {this.state.department_id &&
                             <div className="custom-select-container">
-                                 <select 
-                                   className="select-department-item" 
-                                   name="created_for" 
-                                   value={this.state.created_for} 
-                                   onChange={this.onChange}
-                                   >
-                                  <option key="1" value="">Select User</option>
-                                     {this._renderUserOptions()}
-                                 </select>
+                              <select 
+                              className="select-department-item" 
+                              name="created_for" 
+                              value={this.state.created_for} 
+                              onChange={this.onChange}
+                              >
+                              <option key="1" value="">Select User</option>
+                                {this._renderUserOptions()}
+                             </select>
+                             {errors.created_for && <div className="error-info">{errors.created_for}</div>}
                             </div>
+                            }
                             <input className="btn btn-primary auth-submit-button" type="submit" value="Send Request" />
                         </form>
                     </div>

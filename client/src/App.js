@@ -53,6 +53,9 @@ class App extends Component {
         <Switch>
             <PrivateRoute exact path="/incoming-request" component={Request} />
         </Switch>
+        <Switch>
+            <PrivateRoute exact path="/rejected" component={Request} />
+        </Switch>
        </div>
       </Router>
       </Provider>
