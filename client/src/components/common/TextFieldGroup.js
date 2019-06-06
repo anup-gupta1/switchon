@@ -24,7 +24,7 @@ const TextFieldGroup = ({
                 onChange={onChange}
                 disabled={disabled}
             />
-            {error && <div classsName="invalid-feedback">{error}</div>}
+            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     )
 }

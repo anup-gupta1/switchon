@@ -43,8 +43,22 @@ class Register extends Component {
         const { registerUser } = this.props;
         const { name, email, password, confirmPassword,department_id } = this.state;
         const userData = { name, email, password, confirmPassword, department_id };
-        registerUser(userData);
-        this.props.history.push('/login');
+        registerUser(userData).then(res=>{
+            if(res.data.success){
+                this.props.history.push('/login');
+            }else{
+                const registerErrors = res.data.errors;
+                let errors = {}
+                if(registerErrors.email)errors.email = registerErrors.email;
+                if(registerErrors.password)errors.password = registerErrors.password;
+                if(registerErrors.confirmPassword)errors.confirmPassword = registerErrors.confirmPassword;
+                if(registerErrors.department_id)errors.department_id = registerErrors.department_id;
+                if(registerErrors.name)errors.name = registerErrors.name;
+
+                this.setState({errors})
+            }
+        })
+        
     }
 
     _renderdepartmentOptions = () =>{

@@ -40,6 +40,12 @@ class Login extends Component {
         this.props.loginUser(userData).then(res =>{
             if(res.data.success){
                 this.props.history.push('/');
+            }else{
+                const loginErrors = res.data.errors;
+                let errors = {}
+                if(loginErrors.email)errors.email = loginErrors.email;
+                if(loginErrors.password)errors.password = loginErrors.password;
+                this.setState({errors})
             }
         })
         
@@ -54,7 +60,7 @@ class Login extends Component {
                 <div className="login-form-container">
                     <div className="d-flex align-items-center justify-content-center   form-header">
                         <div className="login-intro-text">
-                        <div className="text-bold">See where the world is zooming !!!!!!</div>
+                       
                         <div className="text-14">Login or Sign up to our community</div>
                         </div>
                     </div>

@@ -20,14 +20,14 @@ class authController{
 
         const { errors, isValid } = validateRegisterInput(req.body);
         if (!isValid) {
-            res.status(400).json({ success: false, errors: errors });
+            res.json({ success: false, errors: errors });
         }
     
         User.findOne({ email: req.body.email })
             .then(user => {
                 if (user) {
                     errors.email = "Email already exists";
-                    return res.status(400).json({ success: false, errors: errors });
+                    return res.json({ success: false, errors: errors });
                 }
                 const newUser = {
                     name: req.body.name,
@@ -61,7 +61,7 @@ class authController{
 
         const { errors, isValid } = validateLoginInput(req.body);
         if (!isValid) {
-            return res.status(400).json({ success: false, errors: errors });
+            return res.json({ success: false, errors: errors });
         }
         const { email } = req.body;
         const { password } = req.body;
