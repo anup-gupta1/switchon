@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from '../utils/setAuthToken';
 import {addIncomingRequest} from './requestActions'
 import io from 'socket.io-client';
-let socket = io('http://127.0.0.1:8000/request');
+let socket = io('/request');
 
 export const setCurrentUser = decoded  =>{
    
