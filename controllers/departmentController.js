@@ -1,4 +1,4 @@
-const Department = require('../models/department.js');
+const Department = require('../models/Department.js');
 
 class departmentController{
 
