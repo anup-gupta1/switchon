@@ -63,7 +63,7 @@ require('./config/passport')(passport);
 // const mongoURI = require('./config/keys').mongoURI;
 let mongoURI = ''
 if(process.env.NODE_ENV === 'production'){
-    mongoURI = "mongodb://anup:anup027gupta@ds159036.mlab.com:59036/lets-go";
+    mongoURI = "mongodb://anup:switch027app@ds151523.mlab.com:51523/switch-on-app";
 }else{
     mongoURI = 'mongodb://localhost:27017/switchOn'
 }
