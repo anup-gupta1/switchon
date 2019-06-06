@@ -12,7 +12,7 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io').listen(server);
 app.set('server',server);
-
+io.set('origins', '*:*');
 
 var notifClients = {};
 app.set("sockets", notifClients);
